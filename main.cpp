@@ -1,14 +1,21 @@
 #include "mbed.h"
-#include "FSR.h"
+#include "ultrasonic.h"
 #include "Servo.h"
 
 Serial pc(USBTX, USBRX);
 AnalogIn water_sensor(p20);
-FSR dog_food_sensor(p18, 10); // Pin 18 is used as the AnalogIn pin and a 10k resistor is used as a voltage divider
-FSR cat_food_sensor(p19, 10); // Pin 19 is used as the AnalogIn pin and a 10k resistor is used as a voltage divider
+// Set the trigger pin to p6 and the echo pin to p7 have updates every .1 seconds and a timeout after 1
+// second, and call dispenseDogFood when the distance changes
+ultrasonic dog_food_sensor(p6, p7, 0.1, 1, &dispenseDogFood);
+// Set the trigger pin to p12 and the echo pin to p13 have updates every .1 seconds and a timeout after 1
+// second, and call dispenseCatFood when the distance changes
+ultrasonic cat_food_sensor(p12, p13, 0.1, 1, &dispenseCatFood);
 PwmOut water_pump(p25);
 Servo dog_food_servo(p21);
 Servo cat_food_servo(p22);
+
+bool food_is_filling;
+bool water_is_filling;
 
 const int DOG_SIGNAL = 1;
 const int CAT_SIGNAL = 2;
@@ -16,30 +23,30 @@ const float WATER_HIGH_THRESHOLD = 0.40;
 const float WATER_LOW_THRESHOLD = 0.33;
 const float WATER_PUMP_ON = 7.0;
 const float WATER_PUMP_OFF = 0.0;
-const float CAT_FOOD_THRESHOLD = 200.0;
-const float DOG_FOOD_THRESHOLD = 200.0;
+const int CAT_FOOD_THRESHOLD = 200.0;
+const int DOG_FOOD_THRESHOLD = 200.0;
 const float SERVO_CLOSE = 0.0;
 const float SERVO_OPEN = 0.5;
 
-bool dispenseCatFood() {
+void dispenseCatFood(int distance) {
     // return true if still filling up food, false otherwise
-    if (cat_food_sensor.readWeight() < CAT_FOOD_THRESHOLD) {
+    if (distance < CAT_FOOD_THRESHOLD) {
         cat_food_servo = SERVO_OPEN;
-        return true;
+        food_is_filling = true;
     } else {
         cat_food_servo = SERVO_CLOSE;
-        return false;
+        food_is_filling = false;
     }
 }
 
-bool dispenseDogFood() {
+void dispenseDogFood(int distance) {
     // return true if still filling up food, false otherwise
-    if (dog_food_sensor.readWeight() < DOG_FOOD_THRESHOLD) {
+    if (distance < DOG_FOOD_THRESHOLD) {
         dog_food_servo = SERVO_OPEN;
-        return true;
+        food_is_filling = true;
     } else {
         dog_food_servo = SERVO_CLOSE;
-        return false;
+        food_is_filling = false;
     }
 }
 
@@ -51,20 +58,22 @@ bool dispenseWater() {
     if (water > WATER_HIGH_THRESHOLD) {
         // if water level is too high, turn off pump
         water_pump = WATER_PUMP_OFF;
-        return false;
+        water_is_filling = false;
     } else if (water < WATER_LOW_THRESHOLD) {
         // if water level is too low, turn on pump
         water_pump = WATER_PUMP_ON;
-        return true;
+        water_is_filling = true;
     } else {
         // if water level is between high and low, turn off pump
         water_pump = WATER_PUMP_OFF;
-        return false;
+        water_is_filling = false;
     }
 }
 
 int main() {
     char signal;
+    dog_food_sensor.startUpdates(); //start measuring the distance
+    cat_food_sensor.startUpdates(); //start measuring the distance
     while (1) {
         signal = 0;
         // read in signal from Pi 3
@@ -74,19 +83,19 @@ int main() {
 
         // keep looping if no signal
         if (signal != 0) {
-            bool water_is_filling = true;
-            bool food_is_filling = true;
+            water_is_filling = true;
+            food_is_filling = true;
             while (water_is_filling && food_is_filling) {
                 // call function to dispense water
-                water_is_filling = dispenseWater();
+                dispenseWater();
 
                 // dispense type of food depending on signal from Pi 3
                 if (signal == DOG_SIGNAL) {
                     // dog
-                    food_is_filling = dispenseDogFood();
+                    dog_food_sensor.checkDistance();
                 } else if (signal == CAT_SIGNAL) {
                     // cat
-                    food_is_filling = dispenseCatFood();
+                    cat_food_sensor.checkDistance();
                 }
             }
             wait(10);
