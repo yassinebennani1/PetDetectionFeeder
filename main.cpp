@@ -17,8 +17,8 @@ Servo cat_food_servo(p22);
 bool food_is_filling;
 bool water_is_filling;
 
-const int DOG_SIGNAL = 1;
-const int CAT_SIGNAL = 2;
+const char DOG_SIGNAL = "1";
+const char CAT_SIGNAL = "2";
 const float WATER_HIGH_THRESHOLD = 0.40;
 const float WATER_LOW_THRESHOLD = 0.33;
 const float WATER_PUMP_ON = 7.0;
@@ -75,14 +75,14 @@ int main() {
     dog_food_sensor.startUpdates(); //start measuring the distance
     cat_food_sensor.startUpdates(); //start measuring the distance
     while (1) {
-        signal = 0;
+        signal = "0";
         // read in signal from Pi 3
         if (pc.readable()) {
             signal = pc.getc();
         }
 
         // keep looping if no signal
-        if (signal != 0) {
+        if (signal != "0") {
             water_is_filling = true;
             food_is_filling = true;
             while (water_is_filling && food_is_filling) {
