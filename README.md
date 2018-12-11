@@ -32,7 +32,7 @@ PUT CODE HERE
 
 ## MBED Code
 
-```
+```cpp
 #include "mbed.h"
 #include "Servo.h"
 Servo catServo(p21);
