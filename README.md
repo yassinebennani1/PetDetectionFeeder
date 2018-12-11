@@ -9,7 +9,11 @@ Autonomous pet feeder that uses ARM Mbed and Raspberry Pi 3. This feeder dispens
 
 ## Pictures
 
-## Flow/Block/Pin Diagram?
+## Pin Diagram
+
+## Block Diagram (Program Flow)
+
+![block_diagram](images/block_diagram.png)
 
 ## Hardware Components
 * [Arm Mbed LPC1768](https://os.mbed.com/platforms/mbed-LPC1768/)
