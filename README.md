@@ -28,15 +28,18 @@ Autonomous pet feeder that uses ARM Mbed and Raspberry Pi 3. This feeder dispens
 
 ## Computer Vision Setup
 
-For the pet detection algorithm, we prioritized speed (frames per second (FPS)) over accuracy so the [YOLO architecture](https://pjreddie.com/darknet/yolo/). Specifically, we used fastest but least accurate YOLO architecture variaation, **the YOLOv3-tiny model**. We also take advantage of a technique called quanitzation which converts the neural network weights from float32 type to int8 for even faster inference. Most of the code is from [this repository](https://github.com/AlexeyAB/yolo2_light), but there were only minor changes to the code. 
+For the pet detection algorithm, we prioritized speed (frames per second (FPS)) over accuracy so the [YOLO architecture](https://pjreddie.com/darknet/yolo/) was used. Specifically, we used fastest but least accurate variation on the YOLO architecture, **the YOLOv3-tiny model**. FPS was increased using a technique called quanitzation which converts the neural network weights from float32 type to int8. Most of the code is from [this repository](https://github.com/AlexeyAB/yolo2_light), but there were minor changes. 
 
 The pet detection algorithm was run on a Raspberry Pi 3 Model B+ with a Raspberry Pi Camera. OpenCV was used to capture images from the camera and feed them through the neural network. [This tutorial](http://pklab.net/?id=392&lang=EN) was used to install OpenCV and to test the interface with the camera.
 
-After following the instructions in the yolo2_light library, Run this command from yolov2_light/bin to start the pet detection algorithm:
+After following the instructions in the yolo2_light library, Run this command from yolov2_light/bin to start the pet detection algorithm on the Raspberry Pi:
 
 ``` shell
 ./darknet detector demo coco.names yolov3-tiny.cfg yolov3-tiny.weights -s 10 -thresh 0.1 -quantized
 ```
+
+Final FPS: 0.05
+Final mAP: 33.1 
 
 ## MBED Code
 
