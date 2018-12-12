@@ -1,0 +1,16 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+<title>Georgia Tech :: LAWN :: Login Redirect Page</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+<body onLoad="document.redirect_form.submit();">
+<form name="redirect_form" method="post" action="https://auth.lawn.gatech.edu/index.php">
+     <input type="hidden" name="url" value="http://auth.lawn.gatech.edu/">
+     <input type="hidden" name="redirect" value="true">
+     <input type="hidden" name="iss" value="on">
+     <input type="hidden" name="iss_default" value="on">
+<input type="submit" value="Access the LAWN Login Page">
+</form></body>
+</html>
+
