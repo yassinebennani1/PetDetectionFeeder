@@ -7,9 +7,9 @@
 
 Autonomous pet feeder that uses ARM Mbed and Raspberry Pi 3. This feeder dispenses 2 different types of pet food for 2 different species of pets and water into a water bowl. Using a Raspberry Pi Camera, the Raspberry Pi runs image recognition using OpenCV to detect when a pet is in front of the feeder. After determining the pet, the Pi sends a signal to the Mbed to dispense the corresponding food and water into the bowls. The Mbed uses sonar and water level sensors to stop dispensing when the bowls are full.
 
-## Pictures
-
 ## Pin Diagram
+
+![pin_diagram](images/pindiagram.png)
 
 ## Block Diagram (Program Flow)
 
@@ -20,15 +20,15 @@ Autonomous pet feeder that uses ARM Mbed and Raspberry Pi 3. This feeder dispens
 * [Raspberry Pi 3 Model B+](https://www.raspberrypi.org/products/raspberry-pi-3-model-b-plus/)
 * [Raspberry Pi 3 Camera](https://www.raspberrypi.org/products/camera-module-v2/)
 * [Sonar Sensor (2x)](https://www.sparkfun.com/products/13959)
-* [ Water Pump ] ( https://www.amazon.com/INTLLAB-Peristaltic-Liquid-Aquarium-Analytical/dp/B0791YL351/ref=asc_df_B0791YL351/?tag=hyprod20&linkCode=df0&hvadid=241981136288&hvpos=1o2&hvnetw=g&hvrand=12099378809525735342&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9010944&hvtargid=pla-416035173050&psc=1)
+* [Water Pump]( https://www.amazon.com/INTLLAB-Peristaltic-Liquid-Aquarium-Analytical/dp/B0791YL351/ref=asc_df_B0791YL351/?tag=hyprod20&linkCode=df0&hvadid=241981136288&hvpos=1o2&hvnetw=g&hvrand=12099378809525735342&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9010944&hvtargid=pla-416035173050&psc=1)
 * [Servo Motor (2x)](https://www.adafruit.com/product/169?gclid=EAIaIQobChMI2uy7wuub3wIVDl8NCh2hHwTQEAYYASABEgJBKfD_BwE)
-* [Water Sensor] (https://www.newegg.com/Product/Product.aspx?Item=9SIA86V2Z30488&ignorebbr=1&nm_mc=KNC-GoogleMKP-PC&cm_mmc=KNC-GoogleMKP-PC-_-pla-Srad+Tech+LTD-_-EC+-+Sensors+%26+Transducers-_-9SIA86V2Z30488&gclid=EAIaIQobChMIxsOD2eub3wIVgoizCh3RtAXJEAQYASABEgIeWvD_BwE&gclsrc=aw.ds)
+* [Water Sensor](https://www.newegg.com/Product/Product.aspx?Item=9SIA86V2Z30488&ignorebbr=1&nm_mc=KNC-GoogleMKP-PC&cm_mmc=KNC-GoogleMKP-PC-_-pla-Srad+Tech+LTD-_-EC+-+Sensors+%26+Transducers-_-9SIA86V2Z30488&gclid=EAIaIQobChMIxsOD2eub3wIVgoizCh3RtAXJEAQYASABEgIeWvD_BwE&gclsrc=aw.ds)
 
 
 
 ## Computer Vision Setup
 
-For the pet detection algorithm, we prioritized speed (frames per second (FPS)) over accuracy so the [YOLO architecture](https://pjreddie.com/darknet/yolo/) was used. Specifically, we used fastest but least accurate variation on the YOLO architecture, **the YOLOv3-tiny model**. FPS was increased using a technique called quanitzation which converts the neural network weights from float32 type to int8. Most of the code is from [this repository](https://github.com/AlexeyAB/yolo2_light), but there were minor changes. 
+For the pet detection algorithm, we prioritized speed (frames per second (FPS)) over accuracy so the [YOLO architecture](https://pjreddie.com/darknet/yolo/) was used. Specifically, we used fastest but least accurate variation on the YOLO architecture, **the YOLOv3-tiny model**. FPS was increased using a technique called quanitzation which converts the neural network weights from float32 type to int8. Most of the code is from [this repository](https://github.com/AlexeyAB/yolo2_light), but there were minor changes.
 
 The pet detection algorithm was run on a Raspberry Pi 3 Model B+ with a Raspberry Pi Camera. OpenCV was used to capture images from the camera and feed them through the neural network. [This tutorial](http://pklab.net/?id=392&lang=EN) was used to install OpenCV and to test the interface with the camera.
 
@@ -39,7 +39,7 @@ After following the instructions in the yolo2_light library, Run this command fr
 ```
 
 Final FPS: 0.05
-Final mAP: 33.1 
+Final mAP: 33.1
 
 ## MBED Code
 
