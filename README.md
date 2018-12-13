@@ -19,10 +19,10 @@ Autonomous pet feeder that uses ARM Mbed and Raspberry Pi 3. This feeder dispens
 * [Arm Mbed LPC1768](https://os.mbed.com/platforms/mbed-LPC1768/)
 * [Raspberry Pi 3 Model B+](https://www.raspberrypi.org/products/raspberry-pi-3-model-b-plus/)
 * [Raspberry Pi 3 Camera](https://www.raspberrypi.org/products/camera-module-v2/)
-* [Sonar Sensor (2x)]()
-* Water Pump
-* Servo Motor (2x)
-* Water Sensor
+* [Sonar Sensor (2x)](https://www.sparkfun.com/products/13959)
+* [Water Pump] (https://www.amazon.com/INTLLAB-Peristaltic-Liquid-Aquarium-Analytical/dp/B0791YL351/ref=asc_df_B0791YL351/?tag=hyprod-20&linkCode=df0&hvadid=241981136288&hvpos=1o2&hvnetw=g&hvrand=12099378809525735342&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9010944&hvtargid=pla-416035173050&psc=1)
+* [Servo Motor (2x)](https://www.adafruit.com/product/169?gclid=EAIaIQobChMI2uy7wuub3wIVDl8NCh2hHwTQEAYYASABEgJBKfD_BwE)
+* [Water Sensor] (https://www.newegg.com/Product/Product.aspx?Item=9SIA86V2Z30488&ignorebbr=1&nm_mc=KNC-GoogleMKP-PC&cm_mmc=KNC-GoogleMKP-PC-_-pla-Srad+Tech+LTD-_-EC+-+Sensors+%26+Transducers-_-9SIA86V2Z30488&gclid=EAIaIQobChMIxsOD2eub3wIVgoizCh3RtAXJEAQYASABEgIeWvD_BwE&gclsrc=aw.ds)
 
 
 
